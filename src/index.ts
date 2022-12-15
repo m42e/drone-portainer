@@ -164,9 +164,9 @@ const axios = Axios.create({
 
         if (!standalone) {
             operationType = 1;
-            const swarmOptions = {SwarmID: swarmId};
-            stackCreateOptions = {...stackCreateOptions, ...swarmOptions};
         }
+        const swarmOptions = {SwarmID: swarmId || ""};
+        stackCreateOptions = {...stackCreateOptions, ...swarmOptions};
 
         const stackCreateResponse = await axios.post(`/stacks?type=${operationType}&method=string&endpointId=${localEp.Id}`, stackCreateOptions);
 
