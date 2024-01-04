@@ -12,6 +12,7 @@ const endpoint          = process.env.PLUGIN_ENDPOINT;
 const composeEnvStr     = process.env.PLUGIN_COMPOSE_ENVIRONMENT;
 let   dockerComposeFile = process.env.PLUGIN_COMPOSE_FILE;
 const standalone        = process.env.PLUGIN_STANDALONE;
+const forcePull         = process.env.PLUGIN_FORCE_PULL;
 
 let additionalComposeEnv: { [key: string]: string } = {};
 
@@ -44,7 +45,7 @@ const axios = Axios.create({
     }
 
     const bearerToken = response.data.jwt as string;
-    axios.defaults.headers = { 'Authorization': "Bearer " + bearerToken};
+    axios.defaults.headers.common['Authorization'] = "Bearer " + bearerToken;
 
     const endpointsReponse = await axios.get("/endpoints");
 
@@ -183,7 +184,8 @@ const axios = Axios.create({
                 id: stackToUpdate.Id,
                 StackFileContent: composeFile.toString(),
                 Env: composeEnvArray,
-                Prune: true
+                Prune: true,
+                PullImage: !!forcePull,
             });
 
         if (stackUpdateResponse.status !== 200) {
