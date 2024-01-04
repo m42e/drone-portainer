@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       RELEASE_VERSION: "${{ vars.VERSION_TAG }}.${{ github.run_number }}"
-      IMAGE_NAME: "robkaandorp/drone-portainer"
+      IMAGE_NAME: "m42e/drone-portainer"
 
     steps:
     - uses: actions/checkout@v3
