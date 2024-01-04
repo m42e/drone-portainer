@@ -8,6 +8,7 @@ const registry          = process.env.PLUGIN_REGISTRY;
 const image             = process.env.PLUGIN_IMAGE;
 const imageTag          = process.env.PLUGIN_IMAGE_TAG;
 const stackName         = process.env.PLUGIN_STACK_NAME;
+const apiKey            = process.env.PLUGIN_PORTAINER_API_KEY;
 const endpoint          = process.env.PLUGIN_ENDPOINT;
 const composeEnvStr     = process.env.PLUGIN_COMPOSE_ENVIRONMENT;
 let   dockerComposeFile = process.env.PLUGIN_COMPOSE_FILE;
@@ -35,17 +36,22 @@ const axios = Axios.create({
 
 (async function() {
 
-    // Authenticate with portainer and set the bearer token
-    let response = await axios.post("/auth", { Username: portainerUsername, Password: portainerPassword });
+    if (!apiKey){
+      // Authenticate with portainer and set the bearer token
+      let response = await axios.post("/auth", { Username: portainerUsername, Password: portainerPassword });
 
-    if (response.status !== 200) {
-        console.error("Login failed");
-        console.error(response);
-        process.exit(1);
+      if (response.status !== 200) {
+          console.error("Login failed");
+          console.error(response);
+          process.exit(1);
+      }
+
+      const bearerToken = response.data.jwt as string;
+      axios.defaults.headers.common['Authorization'] = "Bearer " + bearerToken;
+    }else{
+
+      axios.defaults.headers.common['X-API-Key'] = apiKey;
     }
-
-    const bearerToken = response.data.jwt as string;
-    axios.defaults.headers.common['Authorization'] = "Bearer " + bearerToken;
 
     const endpointsReponse = await axios.get("/endpoints");
 

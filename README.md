@@ -28,6 +28,8 @@ name: default
       from_secret: portainer_username
     portainer_password:
       from_secret: portainer_password
+    portainer_api_key:
+      from_secret: portainer_api_key
     endpoint: primary # The endpoint name in portainer, most of the time this is 'primary' or 'local'.
     registry: <URL of private registry>
     image: example/example-image
@@ -37,6 +39,9 @@ name: default
     compose_environment:
       from_secret: compose_environment
 ```
+
+
+If `portainer_api_key` is present the username and password could be omitted.
 
 The compose file should be named `docker-compose.yml` and be placed in the root of the workspace.
 The stack wil be created when it does not exist and updated if it does exist. Example of compose file:
