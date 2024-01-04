@@ -88,6 +88,7 @@ const axios = Axios.create({
     }
 
 
+    /*
     // Supply a 'X-Registry-Auth' header to work with portainer
     const xRegistryAuth = { registryId: registryFromList.Id };
     const xRegistryAuthStr = Buffer.from(JSON.stringify(xRegistryAuth)).toString("base64");
@@ -104,6 +105,7 @@ const axios = Axios.create({
         console.error(imageResponse);
         process.exit(1);
     }
+    */
 
 
     let stackOptions = {};
