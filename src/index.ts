@@ -55,9 +55,9 @@ const axios = Axios.create({
 
     const endpointsReponse = await axios.get("/endpoints");
 
-    if (response.status !== 200) {
+    if (endpointsReponse.status !== 200) {
         console.error("Get endpoints failed");
-        console.error(response);
+        console.error(endpointsReponse);
         process.exit(1);
     }
 
@@ -74,9 +74,9 @@ const axios = Axios.create({
     // Check if the private registry is registered with portainer
     const registriesResponse = await axios.get("/registries");
 
-    if (response.status !== 200) {
+    if (registriesResponse.status !== 200) {
         console.error("Get registries failed");
-        console.error(response);
+        console.error(registriesResponse);
         process.exit(1);
     }
 
